@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <title>TODO List</title>
+</head>
+<body>
+  <main>
+    <div class="todo_container">
+      <div class="todo_header">
+        <div class="logo_section">
+          <p>adalab logo</p>
+        </div>
+        <div class="date_section">
+          <p class="date"></p>
+          <div class="date_info">
+            <p class="day"></p>
+            <p class="month-year"></p>
+          </div>
+        </div>
+        </div>
+        <div class="todo_section">
+          <ul class="todo-list"></ul>
+          <ul class="done-list"></ul>
+        </div>
+        <div class="add-todo_section hidden">
+            <form class="add-todo">
+              <label for="new-task">Añade una tarea</label>
+              <input type="text" name="new-task" id="new-task" required>
+              <input type="submit" value="añadir" id="add-task">
+            </form>
+            <p class="closeBtn">x</p>
+        </div>
+        <div class="add_section">
+          <button type="button" name="addBtn" class="addBtn">+</button>
+        </div>
+      <div>
+    </div>
+  </main>
+
+  <script src="js/main.js" charset="utf-8"></script>
+</body>
+</html>

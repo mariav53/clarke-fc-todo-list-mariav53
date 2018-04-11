@@ -1,0 +1,288 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+body {
+  background: #0fc3b0;
+}
+main{
+  box-sizing: border-box;
+}
+
+.todo_container{
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 2%;
+  position: relative;
+}
+.todo_header{
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #0fc3b0;
+  padding: 36px 0;
+  height: 40px;
+}
+.logo_section{
+  margin-left: 20px;
+  margin-top: 12px;
+  color: transparent;
+  background-image: url(../images/adalab.png);
+  height: 100%;
+  width: 100%;
+  background-size: 17%;
+  background-repeat: no-repeat;
+}
+
+.date_section{
+  display: flex;
+  width: 100%;
+  margin-left: 30px;
+}
+.date{
+  font-size: 2.8em;
+  color:#0fc3b0;
+  margin-right: 9px;
+  font-weight: bold;
+}
+
+.date_info{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 4%;
+  color:#54585a;
+  line-height: 20px;
+}
+.day{
+  font-weight: bold;
+}
+
+
+
+.todo_section{
+  background: #fff;
+  min-height: 150px;
+}
+
+.add_section{
+  height: 100px;
+  background: #fff;
+  border-top: 1px solid #0fc3b0;
+  position: relative;
+}
+.addBtn{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2em;
+  border-radius: 100%;
+  background: #fff;
+  color: #09877a;
+  border: none;
+  border: 4px solid #0fc3b0;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+}
+
+.add-todo_section{
+  /* background: #0fc3b0; */
+  background: blue;
+  color: #fff;
+  position: absolute;
+  bottom: 2%;
+  z-index: 2;
+  left: 5%;
+  width: 90%;
+}
+.add-todo_section p{
+  position: absolute;
+  top: 1%;
+  right: 2%;
+  cursor: pointer;
+}
+
+.add-todo_section form{
+  /* background: #0fc3b0; */
+  background: blue;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+input[type="text"] {
+	width: 90%;
+	padding: 0 0 10px 0;
+	font-size: 21px;
+	border: 0;
+  background-color: blue;
+	border: 2px solid #fff;
+	outline: none;
+  margin-top: 10px;
+}
+input[type="submit"]{
+  background-color: blue;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 20px;
+  font-size: 1.5em;
+  padding: 10px 0;
+  color:#fff;
+  cursor: pointer;
+}
+
+.hidden{
+  display: none;
+}
+.visible{
+  display: block;
+}
+
+
+.todo-list{
+  list-style-type: none;
+  margin-left: 20px;
+  padding: 30px 0;
+}
+input[type="checkbox"]{
+margin-right: 20px;
+width: 20px;
+height: 20px;
+margin-top: 10px;
+}
+.todo-list label{
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.done-list{
+  list-style-type: none;
+  margin-left: 20px;
+  background: red;
+
+}
+
+/* .todo-list-background {
+	position: fixed;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 999;
+} */
+
+
+/* #todo {
+	position: relative;
+	min-width: 330px;
+}
+
+.add-todo {
+	min-width: 330px;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background: #ffffff;
+	padding: 30px;
+	display: flex;
+	box-shadow: 0 0 30px -10px rgba(0,0,0,.3);
+}
+
+input[type="text"] {
+	width: 90%;
+	padding: 0 0 10px 0;
+	font-size: 21px;
+	border: 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 1);
+	outline: none;
+}
+
+input[type="submit"] {
+	font-size: 19px;
+	width: 10%;
+	border: 1px solid rgba(0, 0, 0, 1);
+	background: rgba(255, 255, 255, 1);
+	transition: background .3s ease;
+	cursor: pointer;
+	outline: none;
+}
+
+input[type="text"]:focus, input[type="submit"]:focus,input[type="text"]:hover, input[type="submit"]:hover {
+	background: rgba(255, 0, 155, 1);
+}
+
+ul.todo-list {
+  margin: 0;
+  padding: 0 0 0 0;
+}
+
+li {
+	transition: box-shadow .20s ease;
+  list-style: none;
+	box-shadow: 0 2px 15px -8px rgba(0,0,0,1);
+	margin-bottom: 30px;
+	word-break: break-word;
+	margin: 30px 30px 0;
+}
+li:hover {
+	box-shadow: 0 2px 15px -5px rgba(0,0,0,1);
+}
+
+li input[type="checkbox"] {
+  display: none;
+}
+
+label {
+  position: relative;
+  display: block;
+  padding: 25px;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+}
+
+span {
+	background: rgba(0,0,0,.2);
+	border-radius: 50%;
+	font-size: 9px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	align-self: flex-end;
+	width: 20px;
+	height: 20px;
+	color: #ffffff;
+}
+
+span:hover {
+	background: red;
+}
+
+input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+	background: rgb(76, 175, 80);
+	color: #ffffff;
+}
+
+.remove-List {
+  margin: 30px 30px 130px 30px;
+	cursor: pointer;
+}
+.remove-List.hidden {
+		display: none;
+	} */
