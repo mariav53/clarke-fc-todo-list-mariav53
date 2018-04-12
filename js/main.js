@@ -6,6 +6,9 @@ const closeBtn = document.querySelector('.closeBtn');
 const form = document.querySelector('.add-todo_section');
 //ul todo list
 const taskList = document.querySelector('.todo-list');
+const doneList = document.querySelector('.done-list');
+
+let tasks =[];
 
 //addEventListeners
 document.addEventListener('DOMContentLoaded', localStorageReady);
@@ -34,8 +37,10 @@ function addTask(e) {
   const task = document.querySelector('#new-task').value;
   console.log(task);
   const li = document.createElement('li');
+  li.className = "task_item";
   const checkboxInput =document.createElement('input');
   checkboxInput.type = 'checkbox';
+  checkboxInput.className = 'checkbox';
   const label = document.createElement('label');
   label.innerText =  task;
 
@@ -43,16 +48,20 @@ function addTask(e) {
   li.appendChild(checkboxInput);
   li.appendChild(label);
 
-  //add li to UL
-  taskList.appendChild(li);
+  //add li to first position in UL
+  const taskListFirst = taskList.firstChild;
+  taskList.insertBefore(li, taskListFirst);
 
+  tasks.push(task);
   //add task to local storage
   addToLocalStorage(task);
+  console.log(tasks);
 
   resetInput();
   hideTodo();
 }
 
+//function to add task to local storage
 function addToLocalStorage(task) {
   let tasks;
   // tasks = array of tasks in local storage
@@ -61,6 +70,7 @@ function addToLocalStorage(task) {
   localStorage.setItem('tasks', JSON.stringify(tasks) );
 }
 
+//get info from local storage
 function getLocalStorage() {
   let tasks;
   if(localStorage.getItem('tasks') === null) {
@@ -71,6 +81,7 @@ function getLocalStorage() {
   return tasks;
 }
 
+//show info from local storage
 function localStorageReady() {
   let tasks;
   tasks = getLocalStorage();
@@ -84,9 +95,24 @@ function localStorageReady() {
     label.innerText =  task;
     li.appendChild(checkboxInput);
     li.appendChild(label);
-    taskList.appendChild(li);
+    const taskListFirst = taskList.firstChild;
+    taskList.insertBefore(li, taskListFirst);
   });
 }
+
+function moveDown () {
+    var ullist, item;
+
+    list = getListNode(this);
+    item = getItemNode(this);
+
+    if(item.nextSibling) {
+      list.insertBefore(item.nextSibling, item);
+    } else {
+      list.insertBefore(item, list.firstChild);
+    }
+  };
+
 
 //Function to get date info
 function getDateInfo(){
