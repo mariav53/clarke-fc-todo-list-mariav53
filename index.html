@@ -24,15 +24,14 @@
         </div>
         </div>
         <div class="todo_section">
-          <button class="borra">borrar</button>
-          <ul class="todo-list"></ul>
-          <ul class="done-list"></ul>
+          <ul id="todo-list"></ul>
+          <ul id="completed-list"></ul>
         </div>
         <div class="add-todo_section hidden">
             <form class="add-todo">
               <label for="new-task">Añade una tarea</label>
-              <input type="text" name="new-task" id="new-task" required>
-              <input type="submit" value="añadir" id="add-task">
+              <input type="text" name="new-task" id="new-task">
+              <input type="button" value="añadir" id="add-task">
             </form>
             <p class="closeBtn">x</p>
         </div>

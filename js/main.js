@@ -1,158 +1,132 @@
-//btn open todo form
-const addTodo = document.querySelector('.addBtn');
-//btn open close form
-const closeBtn = document.querySelector('.closeBtn');
-// form section
-const form = document.querySelector('.add-todo_section');
-//ul todo list
-const taskList = document.querySelector('.todo-list');
-const doneList = document.querySelector('.done-list');
-
-let tasks =[];
-
-//addEventListeners
-document.addEventListener('DOMContentLoaded', localStorageReady);
+document.querySelector('.addBtn').addEventListener('click', showTodo);
+document.querySelector('.closeBtn').addEventListener('click', hideTodo);;
 document.addEventListener('DOMContentLoaded', getDateInfo);
-addTodo.addEventListener('click', showTodo);
-closeBtn.addEventListener('click', hideTodo);
-document.querySelector('.add-todo').addEventListener('submit', addTask);
 
-//functions
-//Show todo form
+//Mostrar formulario
 function showTodo(){
-form.classList.add("visible");
+document.querySelector('.add-todo_section').classList.add("visible");
 }
-//Hide todo form
+//Esconder formulario
 function hideTodo(){
-form.classList.remove("visible");
-}
-//Reset todo form
-function resetInput() {
-  document.querySelector(".add-todo").reset();
+document.querySelector('.add-todo_section').classList.remove("visible");
 }
 
-// add task
-function addTask(e) {
-  e.preventDefault();
-  const task = document.querySelector('#new-task').value;
-  console.log(task);
-  const li = document.createElement('li');
-  li.className = "task_item";
-  const checkboxInput =document.createElement('input');
-  checkboxInput.type = 'checkbox';
-  checkboxInput.className = 'checkbox';
-  const label = document.createElement('label');
-  label.innerText =  task;
-
-  //add checkbox and label to Li
-  li.appendChild(checkboxInput);
-  li.appendChild(label);
-
-  //add li to first position in UL
-  const taskListFirst = taskList.firstChild;
-  taskList.insertBefore(li, taskListFirst);
-
-  tasks.push(task);
-  //add task to local storage
-  addToLocalStorage(task);
-  console.log(tasks);
-
-  resetInput();
-  hideTodo();
-}
-
-//function to add task to local storage
-function addToLocalStorage(task) {
-  let tasks;
-  // tasks = array of tasks in local storage
-  tasks = getLocalStorage();
-  tasks.push(task);
-  localStorage.setItem('tasks', JSON.stringify(tasks) );
-}
-
-//get info from local storage
-function getLocalStorage() {
-  let tasks;
-  if(localStorage.getItem('tasks') === null) {
-    tasks = [];
-  } else {
-    tasks = JSON.parse(localStorage.getItem('tasks') );
-  }
-  return tasks;
-}
-
-//show info from local storage
-function localStorageReady() {
-  let tasks;
-  tasks = getLocalStorage();
-  //create list of tasks to show
-  tasks.forEach(function(task) {
-    const li = document.createElement('li');
-    const checkboxInput =document.createElement('input');
-    checkboxInput.type = 'checkbox';
-    //label
-    var label = document.createElement('label');
-    label.innerText =  task;
-    li.appendChild(checkboxInput);
-    li.appendChild(label);
-    const taskListFirst = taskList.firstChild;
-    taskList.insertBefore(li, taskListFirst);
-  });
-}
-
-function moveDown () {
-    var ullist, item;
-
-    list = getListNode(this);
-    item = getItemNode(this);
-
-    if(item.nextSibling) {
-      list.insertBefore(item.nextSibling, item);
-    } else {
-      list.insertBefore(item, list.firstChild);
-    }
-  };
-
-
-//Function to get date info
+//Obtener datos de fecha
 function getDateInfo(){
   const d = new Date();
-  //Get date
+  //Fecha
   const date =  d.getDate();
   document.querySelector('.date').innerText = date;
-  //Get weekday
-  const weekday = new Array(7);
-  weekday[0] =  "Domingo";
-  weekday[1] = "Lunes";
-  weekday[2] = "Martes";
-  weekday[3] = "Miércoles";
-  weekday[4] = "Jueves";
-  weekday[5] = "Viernes";
-  weekday[6] = "Sábado";
+  //Dia de la semana
+  const weekday = new Array("Domingo","Lunes","Martes","Miércoles","Jueves", "Viernes","Sábado");
   const wday = weekday[d.getDay()];
   document.querySelector('.day').innerText = wday;
-  // //Get month + year
-  const m = new Array();
-  m[0] = "enero";
-  m[1] = "febrero";
-  m[2] = "marzo";
-  m[3] = "abril";
-  m[4] = "mayo";
-  m[5] = "junio";
-  m[6] = "julio";
-  m[7] = "agosto";
-  m[8] = "septiembre";
-  m[9] = "octubre";
-  m[10] = "noviembre";
-  m[11] = "diciembre";
+  //mes + año
+  const m = new Array("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
   const month = m[d.getMonth()];
   const year =  d.getFullYear();
   document.querySelector('.month-year').innerText = month +', '+ year;
 }
 
+//Si no hay datos en LS tenemos un objeto data vacio, sino carga LS
+const data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')):{
+  todo: [],
+  completed: []
+};
+//Pintamos LS
+renderTodoList();
 
+//obtener valor con click del boton add
+document.getElementById('add-task').addEventListener('click', function(){
+  const task = document.getElementById('new-task').value; //input
+  if(task){
+    addItem(task);
+  }
+});
+//obtener valor al pulsar Enter en input
+document.getElementById('new-task').addEventListener('keydown', function (e) {
+  const task = this.value;
+  if (e.code === 'Enter' && task) {
+    addItem(task);
+  }
+});
 
+//Agregamos valor de la tarea a la funcion de pintar LI y reset input
+function addItem (task) {
+  printTaskDOM(task);
+  document.getElementById('new-task').value = '';
+  document.getElementById('new-task').focus();
+  //agregar tarea a array todo
+  data.todo.push(task);
+  //actualizamos LS
+  updateLocalStorage();
+}
 
+//si local storage no esta vacio, recorremos los arrays tod y completed, y pintamos datos en DOM
+function renderTodoList() {
+  if (!data.todo.length && !data.completed.length) return;
+  for (let i = 0; i < data.todo.length; i++) {
+    const task = data.todo[i];
+    printTaskDOM(task);
+  }
+  for (let j = 0; j < data.completed.length; j++) {
+    const task = data.completed[j];
+    printTaskDOM(task, true);
+  }
+}
 
-  //llamada a la funcion de Añadir a Local Storage
-  // addTweetLocalStorage(tweet);
+//Actualizamos local storage con valor de tarea
+function updateLocalStorage() {
+  localStorage.setItem('todoList', JSON.stringify(data));
+}
+
+//pintamos tarea en DOM
+function printTaskDOM(task, completed){
+  //si la tarea esta completada(true) la pintamos en lista completada, sino en todo list
+  const list = (completed) ? document.getElementById('completed-list'):document.getElementById('todo-list');
+  //creamos li con tarea
+  const taskItem = document.createElement('li');
+  //creamos span con nombre de tarea
+  const span = document.createElement('span');
+  span.innerText= task;
+  //creamos input chekcbox
+  let id = 0;
+  id++;
+  const checkboxInput = document.createElement('input');
+  checkboxInput.type= 'checkbox';
+  checkboxInput.id= 'cb_'+ id;
+
+  //evento para completar tarea con checkbox
+  checkboxInput.addEventListener('click', completeItem);
+  taskItem.appendChild(checkboxInput);
+  taskItem.appendChild(span);
+  list.insertBefore(taskItem, list.childNodes[0]);
+}
+
+//Cuando completamos una tarea
+function completeItem(){
+  const item = this.parentNode; //LI
+  const parent = item.parentNode;
+  const id= parent.id;
+  const task = item.innerText;
+
+  //si la tarea esta en lista todo, la borramos del array todo y agregamos a array completed
+  if (id === 'todo-list') {
+    data.todo.splice(data.todo.indexOf(task), 1);
+    data.completed.push(task);
+  } else {
+    data.completed.splice(data.completed.indexOf(task), 1);
+    data.todo.push(task);
+  }
+  updateLocalStorage();
+
+  // Revisa si la tarea debe ser agregarda a lista completed o nuevamente a lista todo
+  const target = (id === 'todo-list') ? document.getElementById('completed-list'):document.getElementById('todo-list');
+  if(id === 'todo-list'){
+      parent.removeChild(item);
+      target.appendChild(item);
+  }else{
+      parent.removeChild(item);
+    target.insertBefore(item, target.childNodes[0]);
+  }
+}
