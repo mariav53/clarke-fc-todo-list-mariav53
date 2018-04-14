@@ -89,18 +89,26 @@ function printTaskDOM(task, completed){
   //creamos span con nombre de tarea
   const span = document.createElement('span');
   span.innerText= task;
+
   //creamos input chekcbox
-  let id = 0;
-  id++;
+  let instance = 0;
+  instance++;
   const checkboxInput = document.createElement('input');
   checkboxInput.type= 'checkbox';
-  checkboxInput.id= 'cb_'+ id;
+  checkboxInput.className= 'checkbox';
+  checkboxInput.id= 'cb_'+instance;
+  //label para dar estilo al checkbox pero afecta a la funcionalidad de completar tarea
+  // const label = document.createElement('label');
+  // label.htmlFor = 'cb_' + instance;
 
   //evento para completar tarea con checkbox
   checkboxInput.addEventListener('click', completeItem);
+
   taskItem.appendChild(checkboxInput);
+  // taskItem.appendChild(label);
   taskItem.appendChild(span);
   list.insertBefore(taskItem, list.childNodes[0]);
+
 }
 
 //Cuando completamos una tarea

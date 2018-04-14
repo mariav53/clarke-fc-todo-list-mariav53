@@ -150,24 +150,35 @@ span{
 li{
   padding: 8px 0;
 }
-
+/* Checkbox simple si funciona correrctamente*/
 input[type="checkbox"] {
-  /* display: inline-block; */
   width: 20px;
   height: 20px;
-  background: url(../images/round-button.png) no-repeat cover;
   margin-right:  20px;
   vertical-align: middle;
   cursor:pointer;
 }
 
-input[type="checkbox"]:checked{
-  background:url(../images/round-done-button.png) no-repeat cover;
+/*Checkbox con estilo pero no funciona correctamente la seleccion de la tarea*/
+/* .checkbox {
+  display:none;
 }
+.checkbox + label{
+  background:url('../images/round-button.png') no-repeat ;
+  height: 25px;
+  width: 32px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+  vertical-align: middle;
+}
+.checkbox:checked + label{
+  background:url('../images/round-done-button.png') no-repeat;
+  height: 25px;
+  width: 32px;
+  display:inline-block;
+  padding: 0 0 0 0px;
+} */
 
-.checked{
-  background:url(../images/round-done-button.png) no-repeat;
-}
 /*UL completed*/
 #completed-list{
   list-style-type: none;
